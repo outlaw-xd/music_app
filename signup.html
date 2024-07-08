@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusiConnect-Signup</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="signup.css">
+    <style>
+        .error-message {
+            color: rgb(255, 244, 93);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>MusiConnect</h1>
+        </div>
+    </header>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="signup-form p-4 border rounded">
+                    <h2 class="text-center mb-4">Sign Up</h2>
+                    <form id="signupForm" action="/signup" method="post">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="firstName" class="form-label">First Name:</label>
+                                <input type="text" id="firstName" name="firstName" class="form-control" required>
+                                <span class="error-message" id="firstNameError"></span>
+                            </div>
+                            <div class="col">
+                                <label for="lastName" class="form-label">Last Name:</label>
+                                <input type="text" id="lastName" name="lastName" class="form-control" required>
+                                <span class="error-message" id="lastNameError"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                            <span class="error-message" id="emailError"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" id="password" name="password" class="form-control" required>
+                            <span class="error-message" id="passwordError"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password:</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+                            <span class="error-message" id="confirmPasswordError"></span>
+                        </div>
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-primary" onclick="validateForm()">Sign Up</button>
+                        </div>
+                    </form>
+                    <p class="text-center mt-3" style="color: white;">Already have an account?  <a href="login.html"style="color: white;"><u>Login here</u></a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-5">
+        <div class="container">
+            <p>&copy; 2024 MusiConnect. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function validateForm() {
+            var firstName = document.getElementById('firstName').value.trim();
+            var lastName = document.getElementById('lastName').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var password = document.getElementById('password').value.trim();
+            var confirmPassword = document.getElementById('confirmPassword').value.trim();
+            var errors = [];
+
+            // Validate first name
+            var firstNameRegex = /^[A-Za-z]{1,10}$/;
+            if (!firstNameRegex.test(firstName)) {
+                errors.push("First name should have alphabets only with a maximum length of 10.");
+                document.getElementById('firstNameError').innerText = "Please enter a valid first name.";
+            } else {
+                document.getElementById('firstNameError').innerText = "";
+            }
+
+            // Validate last name
+            var lastNameRegex = /^[A-Za-z]{1,15}$/;
+            if (!lastNameRegex.test(lastName)) {
+                errors.push("Last name should have alphabets only with a maximum length of 15.");
+                document.getElementById('lastNameError').innerText = "Please enter a valid last name.";
+            } else {
+                document.getElementById('lastNameError').innerText = "";
+            }
+
+            // Validate email
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                errors.push("Please enter a valid email address.");
+                document.getElementById('emailError').innerText = "Please enter a valid email address.";
+            } else {
+                document.getElementById('emailError').innerText = "";
+            }
+
+            // Validate password
+            var passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,}$/;
+            if (!passwordRegex.test(password)) {
+                errors.push("Password should contain at least one uppercase letter, one digit, one special character, and have a minimum length of 6.");
+                document.getElementById('passwordError').innerText = "Password should contain at least one uppercase letter, one digit, one special character, and have a minimum length of 6.";
+            } else {
+                document.getElementById('passwordError').innerText = "";
+            }
+
+            // Validate confirm password
+            if (password !== confirmPassword) {
+                errors.push("Confirm password should match the password.");
+                document.getElementById('confirmPasswordError').innerText = "Confirm password should match the password.";
+            } else {
+                document.getElementById('confirmPasswordError').innerText = "";
+            }
+
+            // Display error messages or submit the form
+            if (errors.length > 0) {
+                document.getElementById('error-message').innerText = errors.join("\n");
+            } else {
+                // Submit the form
+                document.querySelector('form').submit();
+            }
+        }
+    </script>
+</body>
+</html>
